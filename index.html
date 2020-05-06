@@ -403,7 +403,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/1970/01/01/hello-world/" itemprop="url">hello-world</a></h1>
+                <a class="post-title-link" href="/1970/01/01/hello-world/" itemprop="url">求根方法</a></h1>
         
 
         <div class="post-meta">
@@ -425,6 +425,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/" itemprop="url" rel="index">
+                    <span itemprop="name">数值计算</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -455,13 +477,7 @@
       
         
           
-            <p>title: 求根方法<br>categories: </p>
-<ul>
-<li>数值计算<br>tags:</li>
-<li>jQuery<br>mathjax: true</li>
-</ul>
-<hr>
-<!-- Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues). -->
+            <!-- Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues). -->
 <p>这里将简单介绍利用数值逼近的方法求解一些难以求出准确解的方程.</p>
 <h2 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h2><p>利用二分法求根，首先要确定求根区间[x_low, x_high],并且所求得方程$f(x)=0$,$f(x)$需要在所求的区间内是单调且连续的，根据连续函数的介值性(f在取区间两个端点的值异号，那么在这个区间内必存在方程的根.）通过每次将区间一分为二，确定根的范围，来求方程的根.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#二分法求方程的根</span></span><br><span class="line"><span class="keyword">from</span> sympy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span>  exp(x)+ x**<span class="number">3</span> - <span class="number">2</span>*x+<span class="number">5</span> <span class="comment"># 方程的根约为-2.10</span></span><br><span class="line"></span><br><span class="line">x_low = <span class="number">-4.0</span></span><br><span class="line">x_high = <span class="number">2.0</span></span><br><span class="line">e = <span class="number">0.0001</span> </span><br><span class="line"></span><br><span class="line">f_low = f(x_low)</span><br><span class="line">f_high = f(x_high)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> f_low * f_high &gt; <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'No Sultion'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> abs(x_high-x_low) &gt; e:</span><br><span class="line">    x_mid = (x_low + x_high) /<span class="number">2</span></span><br><span class="line">    f_mid = f(x_mid)</span><br><span class="line">    <span class="keyword">if</span> f_low * f_mid &lt; <span class="number">0</span>:</span><br><span class="line">        x_high = x_mid</span><br><span class="line">        f_high = f(x_mid)</span><br><span class="line">    <span class="keyword">elif</span> f_mid * f_high &lt; <span class="number">0</span>:</span><br><span class="line">        x_low = x_mid</span><br><span class="line">        f_low = f_mid</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        x_low = x_mid</span><br><span class="line">        x_high = x_mid</span><br><span class="line">    </span><br><span class="line">x_root = (x_high+x_low)/<span class="number">2.0</span></span><br><span class="line"></span><br><span class="line">print(x_root)</span><br></pre></td></tr></table></figure>
@@ -565,7 +581,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
